@@ -1,22 +1,3 @@
-#CONSTRAINTS
-
-"""
-
-1. Prompt user to enter a date
-    2. Accept this input on the next line 
-    3. Should be <DDMMMYYY>
-            DD == 00 - 31
-            MMM == ALL CAPS:  JAN, FEB
-            YY - 00- 99
-            
-    4. If incorrect state, "Wrong Data Format"
-    5. Print: 
-            Day: <Day>
-            Month: <Correctly Spelled Full Month Name>  
-            Year: <Four Digit Year>
-            
-"""
-
 monthNames = {
     "JAN": "January",
     "FEB": "Febuary",
@@ -32,38 +13,55 @@ monthNames = {
     "DEC": "December"
 }
 
-#Parses user input into a list
+ERROR_MESSAGE = ("Wrong Date Format")
+
+#Parses user input into a list of: day, month,  andyear
 def parseUserInput(input):
     date = []
-    date.append[int(input[0] + input[1])]
-    date.append[input[2] + input[3] + input[4]]
-    date.append[input[5] + input[6]]
+    date.append((input[0] + input[1]))
+    date.append(input[2] + input[3] + input[4])
+    date.append(input[5] + input[6])
     return date
 
+#Tests if input and data is correct
+#Returns false if a test failed, and true if all tests passed
 def validateInput(date):
-    if not str(date[1]).isnumeric() or date[1] > 31: return False
-
-    monthDateIsRight = False
     
-    for month in monthNames:
-        if date[2] == month: monthDateIsRight = True    
+    #Test if the day is all numbers and less than 31
+    if (not str(date[0]).isnumeric()) or int(date[0]) > 31: return False
     
-    if not monthDateIsRight: return False
+    #Test if year is all numbers and between 0 and 99
+    if (not str(date[2].isnumeric())) or int(date[2]) > 99 or int(date[2]) < 0: return False
+    
+    #Test to see if the month is a valid abbreviatio
+    monthIsValid = False
+    for month in monthNames.keys():
+        if date[1] == month: 
+            monthIsValid = True    
+    if not monthIsValid: return False
+    
+    #If all tests pass, return true
     return True
 
-#Get user input
-try: 
-    userInput = input("Enter Date:\n")
-except Exception:
-    print("Wrong Date Format")
-    
-#Make sure input is 7 charcers
-if len(userInput) == 7:
+def error():
+    print(ERROR_MESSAGE)
+    quit()
 
-    date = parseUserInput(userInput)
-    
-    if validateInput(date): None
-    else: print("Wrong Date")
-    
-else:
-    print("Wrong Date Format")
+#Get user input
+def getUserInput():
+    try: 
+        userInput = input("Enter Date:\n")
+        if len(userInput) != 7: error()
+        return userInput
+    except Exception: error()
+    return userInput
+
+userInput = getUserInput()
+date = parseUserInput(userInput)
+
+#If the user data is valid, print it    
+if validateInput(date): 
+    print("Day: " + date[0])
+    print("Month: " + monthNames[date[1]])
+    print("Year: 20" + date[2])
+else: error()
