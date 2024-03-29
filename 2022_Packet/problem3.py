@@ -46,8 +46,8 @@ def validateAddress(address):
 
     return isValid
 
-address = getUserInput()
-if validateAddress(address):
-    print(VALID_ADDRESS)
-else: error()
-    
+if __name__ == "__main__":
+    address = getUserInput()
+    if validateAddress(address):
+        print(VALID_ADDRESS)
+    else: error()
