@@ -56,12 +56,13 @@ def getUserInput():
     except Exception: error()
     return userInput
 
-userInput = getUserInput()
-date = parseUserInput(userInput)
+if __name__ == "__main__":
+    userInput = getUserInput()
+    date = parseUserInput(userInput)
 
-#If the user data is valid, print it    
-if validateInput(date): 
-    print("Day: " + date[0])
-    print("Month: " + monthNames[date[1]])
-    print("Year: 20" + date[2])
-else: error()
+    #If the user data is valid, print it    
+    if validateInput(date): 
+        print("Day: " + date[0])
+        print("Month: " + monthNames[date[1]])
+        print("Year: 20" + date[2])
+    else: error()
