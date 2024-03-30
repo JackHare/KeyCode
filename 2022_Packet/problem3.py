@@ -27,7 +27,7 @@ def validateAddress(address):
     
     #Test to make sure there is 8 blocks
     if len(addressBrokenUp) != 8:
-        error()
+        return False
     
     #Remove blocks with no data
     while addressBrokenUp.count("") > 0:
@@ -41,7 +41,7 @@ def validateAddress(address):
         for letter in block:
             
             #Test if letter is valid hex code
-            if HEX.count(letter) == 0 and not letter.isnumeric():
+            if letter in HEX == True and not letter.isnumeric():
                 isValid = False
 
     return isValid
