@@ -26,22 +26,15 @@ def parseUserInput(input):
 #Tests if input and data is correct
 #Returns false if a test failed, and true if all tests passed
 def validateInput(date):
-    
     #Test if the day is all numbers and less than 31
     if (not str(date[0]).isnumeric()) or int(date[0]) > 31: return False
     
     #Test if year is all numbers and between 0 and 99
     if (not str(date[2].isnumeric())) or int(date[2]) > 99 or int(date[2]) < 0: return False
     
-    #Test to see if the month is a valid abbreviatio
-    monthIsValid = False
-    for month in monthNames.keys():
-        if date[1] == month: 
-            monthIsValid = True    
-    if not monthIsValid: return False
-    
-    #If all tests pass, return true
-    return True
+    #Test to see if the month is a valid abbreviation
+    if date[1] in monthNames.keys(): return True
+    else: return False
 
 def error():
     print(ERROR_MESSAGE)
