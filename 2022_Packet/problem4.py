@@ -1,22 +1,15 @@
-"""
-
-    take input in Base-16P
-
-"""
 
 ERROR_MESSAGE = ("ERROR")
 
-base16_values = {'F': 0, 'E': 1, 'D': 2, 'C': 3, 'B': 4, 'A': 5, '9': 6, '8': 7, '7': 8, '6': 9, '5': 10, '4': 11, '3': 12, '2': 13, '1': 14, '0': 15}
+#BASE-16P to Base 16
+base16_values = {'F': 0, 'E': 1, 'D': 2, 'C': 3, 'B': 4, 'A': 5, '9': 6, '8': 7, '7': 8, '6': 9, '5': "A", '4': "B", '3': "C", '2': "D", '1': "E", '0': "F"}
 
-ascii_dict = dict()
-ascii_in_number = range(0,256)
-for i in ascii_in_number:
-    ascii_dict[str(i)] = chr(i)
-
+#Called when an error occurs
 def error():
     print(ERROR_MESSAGE)
     quit()
 
+#Collects and returns user input
 def get_user_input():
     try:
         user_input = input()
@@ -27,12 +20,17 @@ def get_user_input():
 def convert_base16_to_base10(input):
     result = []
     for num in input:
-        result.append(base16_values[num])
+        result.append(str(base16_values[num]))
     return result
 
 def convert_base10_to_ascii(input):
-    print(input)
-
+    format = [ x+y for x,y in zip(input[0::2], input[1::2]) ]
+    string =  "".join(format)
+    
+    byte_string = bytes.fromhex(string)  
+    ascii_string = byte_string.decode("ASCII")  
+    print(ascii_string)  
+    
 if __name__ == "__main__":
     user_input = get_user_input()
     base10 = convert_base16_to_base10(user_input)
