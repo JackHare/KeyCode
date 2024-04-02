@@ -1,5 +1,6 @@
 import problem2 as p2
 import problem3 as p3
+import problem4 as p4
 
 #Problem 2 tests
 def test_problem2():
@@ -14,3 +15,10 @@ def test_problem3():
     assert p3.validateAddress("A01F:11:5CD3:E321:CCCC:FFFF::122") == True
     assert p3.validateAddress("C23:53:2::FF:3456:3D:483") == True
     assert p3.validateAddress("34.23.13456.3245H.403.7457.2.3DEFF") == False
+    
+#Probelm 4 tests
+def test_problem4():
+    assert p4.convert_base16_to_ascii(p4.convert_base16P_to_base16("BCAC99908DBEAD")) == "CSforAR"
+    assert p4.convert_base16_to_ascii(p4.convert_base16P_to_base16("B6ABA8B0ADB4ACB0B1ABB7B6ACB2BEBCB7B6B1BA")) == "ITWORKSONTHISMACHINE"
+    assert p4.convert_base16_to_ascii(p4.convert_base16P_to_base16("979E9C948B979A8F939E919A8B")) == "hacktheplanet"
+    assert p4.convert_base16_to_ascii(p4.convert_base16P_to_base16("ZZTOP")) == "Invalid Input"
