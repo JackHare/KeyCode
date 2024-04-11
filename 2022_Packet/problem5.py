@@ -1,6 +1,6 @@
 FILE_NOT_FOUND_MESSSAGE = ("File not found")
 
-COMMAND_NAMES = ("UPPER", "LOWER", "REDACT", "REVERSED", "SPACE")
+COMMAND_NAMES = ("UPPER", "LOWER", "REDACT", "REVERSE", "SPACE")
 
 class Command:
     def __init__(self, name, length):
@@ -38,8 +38,10 @@ def parse_input_text(input_text):
     possible_command_length = ""
     
     pos = -1
+    output_pos = -1
     
     input_text = list(input_text)
+    output_text = [""]
     
     for letter in input_text:
         pos += 1
@@ -82,22 +84,43 @@ def parse_input_text(input_text):
         #If we are not in command info, run all queued commands
         if not seen_a_bracket:
             command_pos = -1
+            output_pos += 1
+            
+            output_text.insert(output_pos, letter)
             for command in queued_commands:
                 command_pos += 1       
                 command.age += 1
                 
                 #Make sure this command has not expired
-                if command.age >= command.length:
+                if command.age > command.length and command.name != "REVERSE":
                     queued_commands.pop(command_pos)
                     continue
-        
+                elif command.age-1 > command.length:
+                    queued_commands.pop(command_pos)
+                    continue
                 if command.name == "UPPER":
-                    input_text[pos] = letter.upper()
+                    output_text[output_pos] = letter.upper()
                 
                 if command.name == "LOWER":
-                    input_text[pos] = letter.lower()
-    
-    print("".join(input_text))
+                    output_text[output_pos] = letter.lower()
+                    
+                if command.name == "REDACT":
+                    output_text[output_pos] = "#"    
+                    
+                if command.name == "SPACE":
+                    spaces = ""
+                    for space in range(command.length): spaces += " "
+                    output_text[output_pos] = spaces + letter
+                    #output_pos += command.length
+                    command.age = command.length    
+                    
+                if command.name == "REVERSE":
+
+                    print(pos + (command.length - command.age*2))
+                    print(command.age, ": ", input_text[pos + (command.length+1 - command.age*2) ] )
+                    output_text[output_pos] = input_text[pos + (command.length+1 - command.age*2)]
+                    
+    print("".join(output_text))
     
 if __name__ == "__main__":
     #Get the input text
